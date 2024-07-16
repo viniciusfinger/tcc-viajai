@@ -15,8 +15,8 @@ Automate the creation of detailed travel itineraries using artificial intelligen
 Before running the application, ensure you have the following installed:
 
 - **Python 3** 🐍 (For running the application)
-- LangChain 🦜 (For retrieval-augmented generation on DuckDuckGo and Wikipedia)
-- OpenAI 🤖 (For GPT API Usage)
+- **LangChain** 🦜 (For retrieval-augmented generation on DuckDuckGo and Wikipedia)
+- **OpenAI** 🤖 (For GPT API Usage)
 
 ## Getting Started
 
