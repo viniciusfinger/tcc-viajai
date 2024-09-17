@@ -7,10 +7,17 @@ from langchain_community.agent_toolkits.load_tools import load_tools
 
 llm = ChatOpenAI(model="gpt-4o-mini")
 
+destination = "New York City"
+start_date = "17 September 2024"
+end_date = "24 September 2024"
+
+### Mental note: maybe i'll separate the process of fetch the events and create the itinerary with locations because
+### some results are generating with only events, not historical locations. 
+
 query = """
-I'm going to travel to Porto Alegre between 17 setember 2024 and 24 setember.
+I'm going to travel to {destination} between {start_date} and {end_date}.
 I want you to make a travel itinerary of these days for me with events that will occur on that date.
-"""
+""".format(destination=destination, start_date=start_date, end_date=end_date)
 
 def researchAgent(query, llm):
     """
