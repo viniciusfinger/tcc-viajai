@@ -11,9 +11,6 @@ destination = input("Destination: ")
 start_date = input("Trip start date: ")
 end_date = input("Trip end date: ")
 
-### Mental note: maybe i'll separate the process of fetch the events and create the itinerary with locations because
-### some results are generating with only events, not historical locations. 
-
 query = f"""
 I'm going to travel to {destination} between {start_date} and {end_date}.
 I want you to make a travel itinerary of these days for me with touristic attractions and events that will occur on that date.
@@ -25,7 +22,7 @@ Day 1: September 17, 2024
 
 def researchAgent(query, llm):
     """
-    Create a research agent that will search for information about the query
+    Agente que busca dados do destino da viagem e eventos que ocorrerão no período
     """
     tools = load_tools(['ddg-search', 'wikipedia'], llm=llm)
     prompt = hub.pull("hwchase17/react")
@@ -36,6 +33,10 @@ def researchAgent(query, llm):
     return web_context['output']
 
 def supervisorAgent(query, llm, web_context):
+    """
+    Agente que cria o itinerário de viagem de acordo com o que o agente de pesquisa encontrou.
+    """
+
     prompt_template = """
     You are a manager at a travel agency. Your final answer should be a complete and detailed travel itinerary. Use the context of events and user input to develop the itinerary.
     Context: {web_context}
@@ -51,8 +52,10 @@ def supervisorAgent(query, llm, web_context):
     sequence = RunnableSequence(prompt | llm)
     
     return sequence.invoke({"web_context": web_context, "query": query})
-    
+
 def getResponse(query, llm):
+    """Orquestra as chamadas aos agentes"""
+
     web_context = researchAgent(query, llm)
     return supervisorAgent(query, llm, web_context)
 
