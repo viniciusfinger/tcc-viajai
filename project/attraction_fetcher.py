@@ -61,7 +61,7 @@ def fetch_in_gpt_by_location(location: str):
     
     prompt_tempalte = ChatPromptTemplate.from_messages(
         [
-            ("system", "ou are helpful travel agent helping a customer plan a trip."),
+            ("system", "You are helpful travel agent helping a customer plan a trip."),
             few_shot_prompt_template,
             ("human", """
             The customer asks you to recommend some tourist attractions in the area.
