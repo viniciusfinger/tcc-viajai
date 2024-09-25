@@ -6,7 +6,6 @@ from langchain_community.agent_toolkits.load_tools import load_tools
 
 # TODO: Melhorar para buscar mais resultados, talvez pesquisar no google?
 def fetch_events(start_date, end_date, destination):
-    # Exemplo de few-shot prompt template
     few_shot_prompt = """
     You are an expert travel assistant. Given a destination and travel period, you return a list of events happening at that place during the specified time frame.
 
@@ -45,16 +44,13 @@ def fetch_events(start_date, end_date, destination):
     Now, for the following query:
     """
 
-    # Construir a consulta com base no few-shot template
     query = few_shot_prompt + f"I'm going to travel to {destination} between {start_date} and {end_date}. Return a list of events that occur during that period with name, description, and date in JSON format."
 
-    # Carregar ferramentas e criar agente
     tools = load_tools(['ddg-search', 'wikipedia'], llm=llm)
     prompt = hub.pull("hwchase17/react")
     agent = create_react_agent(llm=llm, prompt=prompt, tools=tools)
     
     agent_executor = AgentExecutor(agent=agent, tools=tools, prompt=prompt, verbose=True)
 
-    # Executar a consulta
     return agent_executor.invoke({"input": query})
 
