@@ -1,0 +1,10 @@
+TODO:
+    - Criar uma feature para inserir a quantidade de atrações de forma dinâmica
+    e com base no período que o usuário informou
+
+    - Criar uma feature para selecionar um range para buscar atrações.
+    Exemplo: Buscar atrações em Porto Alegre e um raio de 50km.
+
+    - Criar uma feature para buscar atrações com base nos gostos do usuário
+
+    - Criar uma feature para buscar eventos
