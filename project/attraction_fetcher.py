@@ -5,7 +5,8 @@ from langchain.prompts import ChatPromptTemplate, FewShotChatMessagePromptTempla
 # TODO: Pensar em um nome melhor pra esse módulo
 # TODO: Na engenharia de prompt, adicionar uma parte para ignorar eventos que ocorrem apenas em uma determinada
 #época, como no caso de canoas, que está retornando a feira do livro.
-def fetch_in_gpt_by_location(location: str):
+# TODO: Rename all locations variables to destination, including in the examples var
+def fetch_touristic_points(location: str):
     examples = [
     {
         "location": """
