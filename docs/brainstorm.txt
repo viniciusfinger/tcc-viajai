@@ -8,3 +8,5 @@ TODO:
     - Criar uma feature para buscar atrações com base nos gostos do usuário
 
     - Criar uma feature para buscar eventos
+
+    - Criar uma feature para o usuário escolher quantas atrações ele quer por dia
