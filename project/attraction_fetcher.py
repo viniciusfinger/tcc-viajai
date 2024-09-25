@@ -1,7 +1,6 @@
 from config import llm
-from langchain.prompts import ChatPromptTemplate
+from langchain.prompts import ChatPromptTemplate, FewShotChatMessagePromptTemplate
 
-# TODO: ESSE FEW SHOT ESTÁ ERRADO, NÃO ESTÁ USANDO FewShotPromptTemplate, refatorar
 # TODO: Usar um formatter ao invés de pedir no prompt
 # TODO: Pensar em um nome melhor pra esse módulo
 # TODO: Na engenharia de prompt, adicionar uma parte para ignorar eventos que ocorrem apenas em uma determinada
@@ -9,7 +8,11 @@ from langchain.prompts import ChatPromptTemplate
 def fetch_in_gpt_by_location(location: str):
     examples = [
     {
-        "location": "Toronto",
+        "location": """
+            The customer asks you to recommend some tourist attractions in the area.
+            Return a list with at least 10 locations of the main tourist attractions of Toronto in JSON format.
+            Make sure the response is correctly formatted with JSON. 
+        """,
         "response": '''
         [
             {{
@@ -24,7 +27,11 @@ def fetch_in_gpt_by_location(location: str):
         '''
     },
     {
-        "location": "New York",
+        "location": """
+            The customer asks you to recommend some tourist attractions in the area.
+            Return a list with at least 10 locations of the main tourist attractions of New York in JSON format.
+            Make sure the response is correctly formatted with JSON. 
+        """,
         "response": '''
         [
             {{
@@ -39,23 +46,31 @@ def fetch_in_gpt_by_location(location: str):
         '''
     }]
 
-    example_template = '''
-    Location: {location}
-    Response: {response}
-    '''
-
-    few_shot_examples = "\n".join(
-        example_template.format(location=ex["location"], response=ex["response"]) for ex in examples
+    example_prompt = ChatPromptTemplate.from_messages(
+        [
+            ("human", "{location}"),
+            ("ai", "{response}"),
+        ]
+    )
+    
+    few_shot_prompt_template = FewShotChatMessagePromptTemplate(
+        example_prompt=example_prompt,
+        examples=examples,
+        input_variables=["location"]
+    )
+    
+    prompt_tempalte = ChatPromptTemplate.from_messages(
+        [
+            ("system", "ou are helpful travel agent helping a customer plan a trip."),
+            few_shot_prompt_template,
+            ("human", """
+            The customer asks you to recommend some tourist attractions in the area.
+            Return a list with at least 10 locations of the main tourist attractions of {location} in JSON format.
+            Make sure the response is correctly formatted with JSON. 
+            """)
+        ]
     )
 
-    prompt_template = ChatPromptTemplate.from_template(few_shot_examples + """
-    You are a travel agent helping a customer plan a trip to {location}. 
-    The customer asks you to recommend some tourist attractions in the area.
-    Return a list with at least 10 locations of the main tourist attractions of {location} in JSON format.
-
-    Make sure the response is correctly formatted with JSON.
-    """)
-
-    location_prompt = prompt_template.format(location=location)
-
-    return llm.invoke(location_prompt).content
+    prompt = prompt_tempalte.format(location=location)
+    
+    return llm.invoke(prompt).content
