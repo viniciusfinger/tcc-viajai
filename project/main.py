@@ -1,4 +1,4 @@
-from attraction_fetcher import fetch_touristic_points
+from project.touristic_points_fetcher import fetch_touristic_points
 from events_fetcher import fetch_events
 from itinerary_maker import make_itinerary
 

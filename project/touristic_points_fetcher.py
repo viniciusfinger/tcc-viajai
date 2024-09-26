@@ -2,7 +2,6 @@ from config import llm
 from langchain.prompts import ChatPromptTemplate, FewShotChatMessagePromptTemplate
 
 # TODO: Usar um formatter ao invés de pedir no prompt
-# TODO: Pensar em um nome melhor pra esse módulo
 # TODO: Na engenharia de prompt, adicionar uma parte para ignorar eventos que ocorrem apenas em uma determinada
 #época, como no caso de canoas, que está retornando a feira do livro.
 # TODO: Rename all locations variables to destination, including in the examples var
