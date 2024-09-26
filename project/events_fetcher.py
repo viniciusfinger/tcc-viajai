@@ -4,7 +4,7 @@ from langchain.agents import create_react_agent, AgentExecutor
 from langchain_community.agent_toolkits.load_tools import load_tools
 
 
-# TODO: Melhorar para buscar mais resultados, talvez pesquisar no google?
+# TODO: Melhorar para buscar mais resultados, talvez pesquisar no google, talvez melhorar o prompt
 def fetch_events(start_date, end_date, destination):
     few_shot_prompt = """
     You are an expert travel assistant. Given a destination and travel period, you return a list of events happening at that place during the specified time frame.
@@ -44,7 +44,7 @@ def fetch_events(start_date, end_date, destination):
     Now, for the following query:
     """
 
-    query = few_shot_prompt + f"I'm going to travel to {destination} between {start_date} and {end_date}. Return a list of events that occur during that period with name, description, and date in JSON format."
+    query = few_shot_prompt + f"I'm going to travel to {destination} between {start_date} and {end_date}. Return a list of at least 10 events that occur during that period with name, description, and date in JSON format."
 
     tools = load_tools(['ddg-search', 'wikipedia'], llm=llm)
     prompt = hub.pull("hwchase17/react")
