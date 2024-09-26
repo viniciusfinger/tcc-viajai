@@ -1,4 +1,4 @@
-from project.touristic_points_fetcher import fetch_touristic_points
+from touristic_points_fetcher import fetch_touristic_points
 from events_fetcher import fetch_events
 from itinerary_maker import make_itinerary
 
@@ -10,3 +10,5 @@ touristic_points = fetch_touristic_points(destination)
 events = fetch_events(start_date, end_date, destination)["output"]
 
 itinerary = make_itinerary(start_date, end_date, destination, touristic_points, events)
+
+print(itinerary)
