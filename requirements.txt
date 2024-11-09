@@ -1,5 +1,5 @@
-langchain-core
-langchain
-langchain-openai
-langchain-community
 fastapi
+langgraph
+typing
+typing-extensions
+uvicorn

@@ -1,8 +1,9 @@
 from fastapi import APIRouter
+from project.model.TravelInput import TravelInput
+import project.service.ai_service as ai_service
 
 travel_itinerary = APIRouter(prefix="/travel_itinerary")
-#graph = create_graph()
 
 @travel_itinerary.get("")
-async def get_travel_itinerary():
-    return {"travel_itinerary": "travel itinerary"}
+async def get_travel_itinerary(travel_input: TravelInput):
+    return ai_service.invoke(travel_input)
