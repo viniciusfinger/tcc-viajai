@@ -1,6 +1,6 @@
-from project.ai.model.state import State
+from backend.ai.model.state import State
 from langchain_openai import ChatOpenAI
-from project.ai.model.touristic_attraction import TouristicAttraction
+from backend.ai.model.touristic_attraction import TouristicAttraction
 import json
 
 def touristic_attractions_agent(state: State) -> dict[str, list[TouristicAttraction]]:

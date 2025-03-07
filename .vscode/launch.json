@@ -7,7 +7,7 @@
             "request": "launch",
             "module": "uvicorn",
             "args": [
-                "project.main:app",
+                "backend.main:app",
                 "--reload"
             ],
         }

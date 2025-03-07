@@ -1,8 +1,8 @@
 from langgraph.graph import START, END
-from project.ai.model.state import State
+from backend.ai.model.state import State
 from langgraph.graph.state import StateGraph, CompiledStateGraph
-from project.ai.node.events_fetcher_agent import events_fetcher_agent
-from project.ai.node.touristic_attractions_agent import touristic_attractions_agent
+from backend.ai.node.events_fetcher_agent import events_fetcher_agent
+from backend.ai.node.touristic_attractions_agent import touristic_attractions_agent
 
 
 def create_graph() -> CompiledStateGraph:

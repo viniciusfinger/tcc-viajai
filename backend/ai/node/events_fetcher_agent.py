@@ -1,7 +1,7 @@
 from langchain import hub
 from langchain_openai import ChatOpenAI
-from project.ai.model.state import State
-from project.ai.model.event import Event
+from backend.ai.model.state import State
+from backend.ai.model.event import Event
 from langchain.agents import create_react_agent, AgentExecutor
 from langchain_community.agent_toolkits.load_tools import load_tools
 import json

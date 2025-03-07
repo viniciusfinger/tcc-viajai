@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from project.model.TravelInput import TravelInput
-import project.service.ai_service as ai_service
+from backend.model.TravelInput import TravelInput
+import backend.service.ai_service as ai_service
 
 travel_itinerary = APIRouter(prefix="/travel_itinerary")
 
