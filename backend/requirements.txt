@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+langchain
+langchain_openai
+langchain_community
+langgraph
+typing
+typing-extensions
+duckduckgo-search

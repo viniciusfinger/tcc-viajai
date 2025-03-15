@@ -1,6 +1,6 @@
 import logging
-from project.ai.graph import create_graph
-from project.model.TravelInput import TravelInput
+from backend.ai.graph import create_graph
+from backend.model.TravelInput import TravelInput
 
 graph = create_graph()
 
