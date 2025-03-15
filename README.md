@@ -1,4 +1,4 @@
-# Travel Itinerary Generation with OpenAI's GPT and Langchain 🦜🛩️🗺️
+# Travel Itinerary Generation with GPT, Langchain and LangGraph 🦜🗺️
 
 Automate the creation of detailed travel itineraries using artificial intelligence. This project harnesses the power of OpenAI's GPT model integrated with Langchain, enhancing itinerary suggestions with real-time data from DuckDuckGo and Wikipedia. Ideal for travel planning services, tourism agencies, and personal travel enthusiasts seeking comprehensive and accurate trip plans. 🗺️🧳
 
@@ -15,7 +15,8 @@ Automate the creation of detailed travel itineraries using artificial intelligen
 Before running the application, ensure you have the following installed:
 
 - **Python 3** 🐍 (For running the application)
-- **LangChain** 🦜 (For retrieval-augmented generation on DuckDuckGo and Wikipedia)
+- **LangChain** 🦜 (For LLMs invoking and retrieval-augmented generation on DuckDuckGo and Wikipedia)
+- **LangGraph** ⛓️ (For organizing the agents)
 - **OpenAI** 🤖 (For GPT API Usage)
 
 ## Getting Started
