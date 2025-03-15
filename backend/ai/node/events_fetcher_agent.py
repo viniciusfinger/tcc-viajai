@@ -8,14 +8,14 @@ import json
 from datetime import datetime
 
 def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
-    """Fetch in DuckDuckGo and Wikipedia for events occurring in the period and location of travel."""
-    llm = ChatOpenAI(model="gpt-4", temperature=0.2)
+    """Fetch in DuckDuckGo for events occurring in the period and location of travel."""
+    llm = ChatOpenAI(model="gpt-4o", temperature=0.2)
     
     tools = load_tools(["ddg-search"], llm=llm)
     
     prompt = hub.pull("hwchase17/react")
     agent = create_react_agent(llm, tools, prompt)
-    agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
+    agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=False)
     
     response = agent_executor.invoke({
         "input": f"""
@@ -26,7 +26,7 @@ def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
         
         Ignore possíveis erros na data e busque por eventos que acontecerão nesse período.
         
-        Obrigatoriamente retorne a resposta no seguinte formato JSON:
+        Obrigatoriamente retorne a resposta no seguinte formato JSON, ignorando frases como "I have gathered some information about events happening in New York between March 14 and March 20, 2025. Here is the structured JSON response":
         [
             {{
                 "name": "Nome do evento",
@@ -37,6 +37,7 @@ def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
                 "source": "URL da fonte"
             }},
             ...
+
         ]
         """
     })
@@ -47,13 +48,14 @@ def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
     json_str = result[result.find('['):result.rfind(']')+1]
     
     for event_data in json.loads(json_str):
-        event = Event()
-        event.name = event_data["name"]
-        event.description = event_data["description"]
-        event.address = event_data["address"]
-        event.date = datetime.strptime(event_data["date"], "%Y-%m-%d").date()
-        event.time = event_data["time"]
-        
+        event = Event(
+            name=event_data["name"],
+            description=event_data["description"],
+            address=event_data["address"],
+            date=datetime.strptime(event_data["date"], "%Y-%m-%d").date(),
+            time=event_data["time"],
+            source=event_data["source"]
+        )
         events.append(event)
     
     return {"events": events}

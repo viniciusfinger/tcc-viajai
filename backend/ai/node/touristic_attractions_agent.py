@@ -13,7 +13,11 @@ def touristic_attractions_agent(state: State) -> dict[str, list[TouristicAttract
     
     Liste os principais pontos turísticos em {state.get('destination')}.
     
-    Obrigatoriamente retorne a resposta no seguinte formato JSON:
+    Traga ao menos 10 pontos turísticos diferentes. Caso não encontre, traga o máximo que conseguir.
+    
+    Retorne diretamente a resposta no seguinte formato JSON, dispensando qualquer outro texto:
+     Retorne a resposta no seguinte formato JSON, dispensando qualquer outro texto:
+    ```json
     [
         {{
             "name": "Nome do local",
@@ -22,6 +26,7 @@ def touristic_attractions_agent(state: State) -> dict[str, list[TouristicAttract
         }},
         ...
     ]
+    ```
     """
     
     response = llm.invoke(prompt)
@@ -29,7 +34,6 @@ def touristic_attractions_agent(state: State) -> dict[str, list[TouristicAttract
     attractions = []
     for attraction_data in json.loads(response.content.replace("```json\n", "").replace("\n```", "")):
         touristic_attraction = TouristicAttraction()
-        
         touristic_attraction.name = attraction_data["name"]
         touristic_attraction.description = attraction_data["description"] 
         touristic_attraction.address = attraction_data["address"]

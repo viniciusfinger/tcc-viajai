@@ -8,6 +8,7 @@ from backend.ai.node.touristic_attractions_agent import touristic_attractions_ag
 def create_graph() -> CompiledStateGraph:
     graph = StateGraph(State)
     
+    #todo: paralelizar os nodes para ganhar performance
     graph.add_node("events_fetcher_agent", events_fetcher_agent)
     graph.add_node("touristic_attractions_agent", touristic_attractions_agent)
     
