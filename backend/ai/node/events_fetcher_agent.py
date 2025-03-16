@@ -24,9 +24,8 @@ def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
         Use a ferramenta de busca para encontrar eventos que acontecerão em {state.get('destination')} 
         entre {state.get('start_date')} e {state.get('end_date')}.
         
-        Ignore possíveis erros na data e busque por eventos que acontecerão nesse período.
+        Retorne a resposta no seguinte formato JSON:
         
-        Obrigatoriamente retorne a resposta no seguinte formato JSON, ignorando frases como "I have gathered some information about events happening in New York between March 14 and March 20, 2025. Here is the structured JSON response":
         [
             {{
                 "name": "Nome do evento",
