@@ -9,6 +9,7 @@ class State(TypedDict):
     Representation of the state machine (StateGraph) state.
     The langgraph's add_messages function adds messages to the message list.
     """
+    trace_id: str
     destination: str
     start_date: date
     end_date: date

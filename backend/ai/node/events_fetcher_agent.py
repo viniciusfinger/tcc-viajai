@@ -7,10 +7,12 @@ from langchain_community.agent_toolkits.load_tools import load_tools
 from typing import List
 from pydantic import BaseModel, Field
 from langchain_core.output_parsers import PydanticOutputParser
-
+import logging
 
 def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
     """Fetch in DuckDuckGo for events occurring in the period and location of travel."""
+    
+    logging.info(f"[Events Fetcher Agent] Fetching events for {state.get('destination')} between {state.get('start_date')} and {state.get('end_date')}. Trace: {state.get('trace_id')}")
     
     llm = ChatOpenAI(model="gpt-4o", temperature=0.2)
     

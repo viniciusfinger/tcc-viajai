@@ -4,9 +4,13 @@ from backend.ai.model.touristic_attraction import TouristicAttraction
 from langchain_core.output_parsers import PydanticOutputParser
 from typing import List
 from pydantic import BaseModel, Field
+import logging
+
 
 def touristic_attractions_agent(state: State) -> dict[str, list[TouristicAttraction]]:
     """Fetch in LLM for touristic attractions in the location of travel."""
+    
+    logging.info(f"[Touristic Attractions Agent] Fetching touristic attractions for {state.get('destination')}. Trace: {state.get('trace_id')}")
     
     llm = ChatOpenAI(model="gpt-4o")
     
