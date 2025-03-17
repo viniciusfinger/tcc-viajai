@@ -4,8 +4,9 @@ from backend.ai.model.state import State
 from backend.ai.model.event import Event
 from langchain.agents import create_react_agent, AgentExecutor
 from langchain_community.agent_toolkits.load_tools import load_tools
-import json
-from datetime import datetime
+from typing import List
+from pydantic import BaseModel, Field
+from langchain_core.output_parsers import PydanticOutputParser
 
 
 def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
@@ -17,6 +18,8 @@ def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
     
     prompt = hub.pull("hwchase17/react")
     agent = create_react_agent(llm, tools, prompt)
+    
+    parser = PydanticOutputParser(pydantic_object=EventListWrapper)
     
     agent_executor = AgentExecutor(
         agent=agent,
@@ -32,46 +35,17 @@ def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
         Use a ferramenta de busca para encontrar eventos que acontecerão em {state.get('destination')} 
         entre {state.get('start_date')} e {state.get('end_date')}.
         
-        Retorne a resposta no seguinte formato JSON:
-        
-        [
-            {{
-                "name": "Nome do evento",
-                "description": "Descrição detalhada do evento", 
-                "address": "Local/endereço do evento",
-                "date": "YYYY-MM-DD",
-                "time": "HH:MM",
-                "source": "URL da fonte"
-            }},
-            ...
-
-        ]
+        Responda no seguinte formato, ignorando textos ou explicações adicionais:
+        {parser.get_format_instructions()}
         """
     })
     
-    events = _extract_data_from_response(response["output"])
+    events_list_wrapper = parser.parse(response["output"])
     
-    return {"events": events}
+    return {"events": events_list_wrapper.events}
 
 
-def _extract_data_from_response(response: str) -> list[Event]:
-    """Convert the LLM response into a list of events."""
+class EventListWrapper(BaseModel):
+    """A wrapper class necesseary to handle pydantic list schema."""
     
-    events = []
-    
-    json_str = response[response.find('['):response.rfind(']')+1]
-    
-    for event_data in json.loads(json_str):
-        event = Event(
-            name=event_data["name"],
-            description=event_data["description"],
-            address=event_data["address"],
-            date=datetime.strptime(event_data["date"], "%Y-%m-%d").date(),
-            time=event_data["time"],
-            source=event_data["source"]
-        )
-        
-        events.append(event)
-    
-    return events
-
+    events: List[Event] = Field(description="A list of events")
