@@ -29,17 +29,19 @@ def touristic_attractions_agent(state: State) -> dict[str, list[TouristicAttract
     """
     
     response = llm.invoke(prompt)
-    attractions = _extract_data_from_response(response)
+    attractions = _extract_data_from_response(response.content)
     
     return {"touristic_attractions": attractions}
 
 
-def _extract_data_from_response(response: dict) -> list[TouristicAttraction]:
+def _extract_data_from_response(response: str) -> list[TouristicAttraction]:
     """Convert the LLM response into a list of touristic attractions."""
     
     attractions = []
     
-    for attraction_data in json.loads(response.content.replace("```json\n", "").replace("\n```", "")):
+    json_str = response[response.find('['):response.rfind(']')+1]
+    
+    for attraction_data in json.loads(json_str):
         touristic_attraction = TouristicAttraction()
         touristic_attraction.name = attraction_data["name"]
         touristic_attraction.description = attraction_data["description"] 

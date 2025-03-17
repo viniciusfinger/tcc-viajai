@@ -11,7 +11,7 @@ from datetime import datetime
 def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
     """Fetch in DuckDuckGo for events occurring in the period and location of travel."""
     
-    llm = ChatOpenAI(model="gpt-4o")
+    llm = ChatOpenAI(model="gpt-4o", temperature=0.2)
     
     tools = load_tools(["ddg-search"], llm=llm)
     
@@ -23,7 +23,7 @@ def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
         tools=tools,
         verbose=False,
         handle_parsing_errors=True,
-        max_iterations=3)
+        max_iterations=5)
     
     response = agent_executor.invoke({
         "input": f"""
