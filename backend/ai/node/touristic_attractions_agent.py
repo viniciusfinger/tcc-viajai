@@ -1,12 +1,16 @@
 from backend.ai.model.state import State
 from langchain_openai import ChatOpenAI
 from backend.ai.model.touristic_attraction import TouristicAttraction
-import json
+from langchain_core.output_parsers import PydanticOutputParser
+from typing import List
+from pydantic import BaseModel, Field
 
 def touristic_attractions_agent(state: State) -> dict[str, list[TouristicAttraction]]:
     """Fetch in LLM for touristic attractions in the location of travel."""
     
     llm = ChatOpenAI(model="gpt-4o")
+    
+    parser = PydanticOutputParser(pydantic_object=TouristicAttractionListWrapper)
     
     prompt = f"""
     Você é um especialista em turismo e está ajudando um cliente a planejar sua viagem.
@@ -15,36 +19,17 @@ def touristic_attractions_agent(state: State) -> dict[str, list[TouristicAttract
     
     Traga ao menos 10 pontos turísticos diferentes. Caso não encontre, traga o máximo que conseguir.
     
-    Retorne diretamente a resposta no seguinte formato JSON, dispensando qualquer outro texto:
-    ```json
-    [
-        {{
-            "name": "Nome do local",
-            "description": "Descrição detalhada do local",
-            "address": "Endereço completo"
-        }},
-        ...
-    ]
-    ```
+    Responda no seguinte formato, ignorando textos ou explicações adicionais:
+    {parser.get_format_instructions()}
     """
     
     response = llm.invoke(prompt)
-    attractions = _extract_data_from_response(response)
+    attractions_list_wrapper = parser.parse(response.content)
     
-    return {"touristic_attractions": attractions}
+    return {"touristic_attractions": attractions_list_wrapper.attractions}
 
 
-def _extract_data_from_response(response: dict) -> list[TouristicAttraction]:
-    """Convert the LLM response into a list of touristic attractions."""
+class TouristicAttractionListWrapper(BaseModel):
+    """A wrapper class necesseary to handle pydantic list schema."""
     
-
-    attractions = []
-    
-    for attraction_data in json.loads(response.content.replace("```json\n", "").replace("\n```", "")):
-        touristic_attraction = TouristicAttraction()
-        touristic_attraction.name = attraction_data["name"]
-        touristic_attraction.description = attraction_data["description"] 
-        touristic_attraction.address = attraction_data["address"]
-        attractions.append(touristic_attraction)
-    
-    return attractions
+    attractions: List[TouristicAttraction] = Field(description="A list of touristic attractions")
