@@ -1,6 +1,8 @@
-# Travel Itinerary Generation with GPT, Langchain and LangGraph 🦜🗺️
+# ViajAI - Artificial Intelligence for Personalized Travel itineraries 🗺️
 
-Automate the creation of detailed travel itineraries using artificial intelligence. This project harnesses the power of OpenAI's GPT model integrated with Langchain, enhancing itinerary suggestions with real-time data from DuckDuckGo and Wikipedia. Ideal for travel planning services, tourism agencies, and personal travel enthusiasts seeking comprehensive and accurate trip plans. 🗺️🧳
+Project developed as a final project (TCC) for the bachelor's degree in Computer Science at La Salle University (Brazil). 
+
+Automate the creation of personalized and detailed travel itineraries using artificial intelligence. 
 
 ## Features
 
@@ -8,38 +10,31 @@ Automate the creation of detailed travel itineraries using artificial intelligen
 - **RAG Enhancement**: Implements retrieval-augmented generation (RAG) to enrich responses with information retrieved from DuckDuckGo and Wikipedia.
 - **Flexible Input**: Accepts various prompts to tailor itinerary suggestions based on user preferences and destination specifics.
 - **Real-time Data Integration**: Fetches up-to-date information to ensure relevance and accuracy of travel recommendations.
-- **Interactive Experience**: Provides engaging and informative trip plans suitable for diverse travel preferences and requirements.
-
-## Prerequisites
-
-Before running the application, ensure you have the following installed:
-
-- **Python 3** 🐍 (For running the application)
-- **LangChain** 🦜 (For LLMs invoking and retrieval-augmented generation on DuckDuckGo and Wikipedia)
-- **LangGraph** ⛓️ (For organizing the agents)
-- **OpenAI** 🤖 (For GPT API Usage)
+- **Interactive Experience**: Provides engaging and informative trip plans suitable for diverse travel preferences and requirements
 
 ## Getting Started
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/viniciusfinger/travel-assistant-ai.git
+   git clone https://github.com/viniciusfinger/tcc-viajai.git
    ```
 
 2. **Navigate to the project directory:**
    ```bash
-   cd travel-assistant-ai
+   cd tcc-viajai
    ```
 
-3. **Install dependencies:**
+3. **Navigate to the back-end directory:**
+   ```bash
+   cd backend
+   ```
+
+4. **Install dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Run the project:**
+5. **Run the project:**
    ```bash
-   python3 travelAgent.py
+   python3 main.py
    ```
----
-
-Feel free to contribute to this project and enhance its functionality further! Happy traveling! 🛫
