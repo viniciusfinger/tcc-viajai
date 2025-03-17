@@ -37,7 +37,6 @@ def touristic_attractions_agent(state: State) -> dict[str, list[TouristicAttract
 def _extract_data_from_response(response: dict) -> list[TouristicAttraction]:
     """Convert the LLM response into a list of touristic attractions."""
     
-
     attractions = []
     
     for attraction_data in json.loads(response.content.replace("```json\n", "").replace("\n```", "")):
