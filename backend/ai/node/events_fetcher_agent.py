@@ -7,15 +7,23 @@ from langchain_community.agent_toolkits.load_tools import load_tools
 import json
 from datetime import datetime
 
+
 def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
     """Fetch in DuckDuckGo for events occurring in the period and location of travel."""
-    llm = ChatOpenAI(model="gpt-4o", temperature=0.2)
+    
+    llm = ChatOpenAI(model="gpt-4o")
     
     tools = load_tools(["ddg-search"], llm=llm)
     
     prompt = hub.pull("hwchase17/react")
     agent = create_react_agent(llm, tools, prompt)
-    agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=False)
+    
+    agent_executor = AgentExecutor(
+        agent=agent,
+        tools=tools,
+        verbose=False,
+        handle_parsing_errors=True,
+        max_iterations=3)
     
     response = agent_executor.invoke({
         "input": f"""
@@ -41,10 +49,17 @@ def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
         """
     })
     
+    events = _extract_data_from_response(response["output"])
+    
+    return {"events": events}
+
+
+def _extract_data_from_response(response: str) -> list[Event]:
+    """Convert the LLM response into a list of events."""
+    
     events = []
     
-    result = response["output"]
-    json_str = result[result.find('['):result.rfind(']')+1]
+    json_str = response[response.find('['):response.rfind(']')+1]
     
     for event_data in json.loads(json_str):
         event = Event(
@@ -55,6 +70,8 @@ def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
             time=event_data["time"],
             source=event_data["source"]
         )
+        
         events.append(event)
     
-    return {"events": events}
+    return events
+
