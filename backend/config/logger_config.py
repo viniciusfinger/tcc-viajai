@@ -16,10 +16,10 @@ def setup_logger():
 
     log_level = os.environ.get("LOG_LEVEL", "INFO")
     
-    os.makedirs("logs", exist_ok=True)
+    os.makedirs("backend/logs", exist_ok=True)
 
     file_handler = RotatingFileHandler(
-        "logs/app.log", 
+        "backend/logs/app.log", 
         maxBytes=10*1024*1024,  # 10MB
         backupCount=5
     )
