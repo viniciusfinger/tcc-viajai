@@ -2,6 +2,7 @@ from typing_extensions import TypedDict
 from datetime import date
 from backend.ai.model.event import Event
 from backend.ai.model.touristic_attraction import TouristicAttraction
+from backend.ai.model.travel_itinerary import TravelItinerary
 
 
 class State(TypedDict):
@@ -15,3 +16,4 @@ class State(TypedDict):
     end_date: date
     events: list[Event]
     touristic_attractions: list[TouristicAttraction]
+    travel_itinerary: TravelItinerary

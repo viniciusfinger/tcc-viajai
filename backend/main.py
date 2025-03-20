@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-from backend.controller.travel_itinerary_controller import travel_itinerary
+from backend.controller.travel_itinerary_controller import travel_itinerary_router
 from backend.config.logger_config import setup_logger
 
 setup_logger()
 app = FastAPI()
-app.include_router(travel_itinerary)
+app.include_router(travel_itinerary_router)
