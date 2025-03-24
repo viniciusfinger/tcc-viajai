@@ -17,4 +17,4 @@ async def get_travel_itinerary(travel_input: TravelInput) -> TravelItinerary:
     
     logging.info(f"[Travel Itinerary Controller] 200 OK - Success generating travel itinerary. Trace: {travel_input.trace_id}")
     
-    return response["travel_itinerary"]
+    return response
