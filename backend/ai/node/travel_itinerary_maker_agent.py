@@ -5,6 +5,8 @@ import logging
 from langchain_core.output_parsers import PydanticOutputParser
 from pydantic import BaseModel, Field
 
+#todo: repensar a experiência do usuário para ele mesmo selecionar os eventos e pontos turísticos
+# que ele tem interesse, ai sim chama esse agente (sem grafo mesmo) para montar o roteiro
 
 def travel_itinerary_maker_agent(state: State) -> dict[str, TravelItinerary]:
     """ Make a travel itinerary based on the events and touristic attractions. """
