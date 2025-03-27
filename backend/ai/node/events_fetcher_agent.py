@@ -28,7 +28,7 @@ def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
         tools=tools,
         verbose=True,
         handle_parsing_errors=True,
-        max_iterations=7)
+        max_iterations=10)
     
     response = agent_executor.invoke({
         "input": f"""
