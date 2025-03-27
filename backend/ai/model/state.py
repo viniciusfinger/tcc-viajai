@@ -3,7 +3,7 @@ from datetime import date
 from backend.ai.model.event import Event
 from backend.ai.model.touristic_attraction import TouristicAttraction
 from backend.ai.model.travel_itinerary import TravelItinerary
-
+from backend.ai.model.interest import Interest
 
 class State(TypedDict):
     """
@@ -17,3 +17,4 @@ class State(TypedDict):
     events: list[Event]
     touristic_attractions: list[TouristicAttraction]
     travel_itinerary: TravelItinerary
+    interests: list[Interest]
