@@ -37,6 +37,8 @@ def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
         Use a ferramenta de busca para encontrar eventos que acontecerão em {state.get('destination')} 
         entre {state.get('start_date')} e {state.get('end_date')}.
         
+        Busque no mínimo 5 eventos.
+        
         Responda no seguinte formato, ignorando textos ou explicações adicionais:
         {parser.get_format_instructions()}
         """
