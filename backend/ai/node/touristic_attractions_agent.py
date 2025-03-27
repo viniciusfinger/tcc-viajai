@@ -23,6 +23,10 @@ def touristic_attractions_agent(state: State) -> dict[str, list[TouristicAttract
     
     Traga ao menos 10 pontos turísticos diferentes. Caso não encontre, traga o máximo que conseguir.
     
+    O usuário tem interesse em {state.get('interests')}, portanto, traga pontos turísticos 
+    que estejam relacionados aos interesses do usuário e também pontos turísticos que possam ser 
+    de interesse geral.
+    
     Responda no seguinte formato, ignorando textos ou explicações adicionais:
     {parser.get_format_instructions()}
     """

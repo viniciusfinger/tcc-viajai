@@ -26,9 +26,9 @@ def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
     agent_executor = AgentExecutor(
         agent=agent,
         tools=tools,
-        verbose=False,
+        verbose=True,
         handle_parsing_errors=True,
-        max_iterations=5)
+        max_iterations=10)
     
     response = agent_executor.invoke({
         "input": f"""
@@ -36,6 +36,9 @@ def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
         
         Use a ferramenta de busca para encontrar eventos que acontecerão em {state.get('destination')} 
         entre {state.get('start_date')} e {state.get('end_date')}.
+        
+        Busque por eventos que envolvam pelo menos um desses interesses: {state.get('interests')}, 
+        e eventos que possam ser de interesse geral.
         
         Busque no mínimo 5 eventos.
         
