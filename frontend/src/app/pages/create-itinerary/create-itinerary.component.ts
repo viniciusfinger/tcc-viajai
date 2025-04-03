@@ -23,9 +23,9 @@ export class CreateItineraryComponent {
   isLoading: boolean = false;
 
   constructor(
-    private travelItineraryService: TravelItineraryService,
-    private interestService: InterestService,
-    private router: Router
+    private readonly travelItineraryService: TravelItineraryService,
+    private readonly interestService: InterestService,
+    private readonly router: Router
   ) { }
 
   ngOnInit() {
