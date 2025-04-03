@@ -9,6 +9,9 @@ from pydantic import BaseModel, Field
 from langchain_core.output_parsers import PydanticOutputParser
 import logging
 
+
+#TODO: Error ```Invalid Format: Missing 'Action:' after 'Thought:'
+
 def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
     """Fetch in DuckDuckGo for events occurring in the period and location of travel."""
     

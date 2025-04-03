@@ -2,7 +2,7 @@
     <div class="w-full max-w-md bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-white/20">
         <h1 class="text-3xl font-bold text-center mb-8 text-white">Criar Roteiro de Viagem Inteligente</h1>
 
-        <form class="space-y-6">
+        <form class="space-y-6" (ngSubmit)="onSubmit()">
             <div class="group">
                 <label for="destination" class="block text-sm font-medium text-white/80 mb-2">Destino</label>
                 <div class="relative">
@@ -13,7 +13,7 @@
                                 clip-rule="evenodd" />
                         </svg>
                     </span>
-                    <input type="text" id="destination"
+                    <input type="text" id="destination" [(ngModel)]="destination" name="destination"
                         class="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-300">
                 </div>
             </div>
@@ -28,7 +28,7 @@
                                 clip-rule="evenodd" />
                         </svg>
                     </span>
-                    <input type="date" id="departure"
+                    <input type="date" id="departure" [(ngModel)]="startDate" name="startDate"
                         class="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-300">
                 </div>
             </div>
@@ -43,7 +43,7 @@
                                 clip-rule="evenodd" />
                         </svg>
                     </span>
-                    <input type="date" id="return"
+                    <input type="date" id="return" [(ngModel)]="endDate" name="endDate"
                         class="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-300">
                 </div>
             </div>
@@ -55,14 +55,15 @@
                         [class.bg-indigo-600]="selectedInterests.includes(interest)"
                         [class.bg-white-200]="!selectedInterests.includes(interest)"
                         class="px-4 py-2 rounded-full border border-white/10 text-white text-sm font-medium hover:bg-indigo-500 transition-all duration-300">
-                        {{ interest }}
+                        {{ interest.charAt(0).toUpperCase() + interest.slice(1) }}
                     </button>
                 </div>
             </div>
 
-            <button type="submit"
-                class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 px-6 rounded-xl hover:from-indigo-700 hover:to-purple-700 transform hover:scale-[1.02] transition-all duration-300 font-medium shadow-lg shadow-indigo-500/25">
-                Criar Roteiro
+            <button type="submit" [disabled]="isLoading"
+                class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 px-6 rounded-xl hover:from-indigo-700 hover:to-purple-700 transform hover:scale-[1.02] transition-all duration-300 font-medium shadow-lg shadow-indigo-500/25 disabled:opacity-50 disabled:cursor-not-allowed">
+                <span *ngIf="!isLoading">Criar Roteiro</span>
+                <span *ngIf="isLoading">Processando...</span>
             </button>
         </form>
     </div>
