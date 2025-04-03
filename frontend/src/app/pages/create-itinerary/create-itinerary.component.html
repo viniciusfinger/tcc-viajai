@@ -1,10 +1,10 @@
 <div class="min-h-screen bg-gradient-to-br from-indigo-900 to-black p-8 flex items-center justify-center">
     <div class="w-full max-w-md bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-white/20">
-        <h1 class="text-3xl font-bold text-center mb-8 text-white">Criar Roteiro de Viagem Inteligente</h1>
+        <h1 class="text-3xl font-bold text-center mb-8 text-white">ViajAI - AI Travel Planner</h1>
 
         <form class="space-y-6" (ngSubmit)="onSubmit()">
             <div class="group">
-                <label for="destination" class="block text-sm font-medium text-white/80 mb-2">Destino</label>
+                <label for="destination" class="block text-sm font-medium text-white/80 mb-2">Destination</label>
                 <div class="relative">
                     <span class="absolute left-3 top-1/2 -translate-y-1/2 text-white/50">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -19,7 +19,7 @@
             </div>
 
             <div class="group">
-                <label for="departure" class="block text-sm font-medium text-white/80 mb-2">Data de Ida</label>
+                <label for="departure" class="block text-sm font-medium text-white/80 mb-2">Departure Date</label>
                 <div class="relative">
                     <span class="absolute left-3 top-1/2 -translate-y-1/2 text-white/50">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -34,7 +34,7 @@
             </div>
 
             <div class="group">
-                <label for="return" class="block text-sm font-medium text-white/80 mb-2">Data de Volta</label>
+                <label for="return" class="block text-sm font-medium text-white/80 mb-2">Return Date</label>
                 <div class="relative">
                     <span class="absolute left-3 top-1/2 -translate-y-1/2 text-white/50">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -49,7 +49,7 @@
             </div>
 
             <div class="group">
-                <label class="block text-sm font-medium text-white/80 mb-2">Interesses</label>
+                <label class="block text-sm font-medium text-white/80 mb-2">Interests</label>
                 <div class="flex flex-wrap gap-2">
                     <button type="button" *ngFor="let interest of interests" (click)="toggleInterest(interest)"
                         [class.bg-indigo-600]="selectedInterests.includes(interest)"
@@ -62,8 +62,8 @@
 
             <button type="submit" [disabled]="isLoading"
                 class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 px-6 rounded-xl hover:from-indigo-700 hover:to-purple-700 transform hover:scale-[1.02] transition-all duration-300 font-medium shadow-lg shadow-indigo-500/25 disabled:opacity-50 disabled:cursor-not-allowed">
-                <span *ngIf="!isLoading">Criar Roteiro</span>
-                <span *ngIf="isLoading">Processando...</span>
+                <span *ngIf="!isLoading">Create Itinerary</span>
+                <span *ngIf="isLoading">Processing...</span>
             </button>
         </form>
     </div>
