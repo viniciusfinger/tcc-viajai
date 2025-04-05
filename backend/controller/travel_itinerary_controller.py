@@ -6,9 +6,9 @@ import logging
 import uuid
 
 
-travel_itinerary_router = APIRouter(prefix="/travel_itinerary")
+travel_itinerary_router = APIRouter(prefix="/travel-itineraries")
 
-@travel_itinerary_router.get("")
+@travel_itinerary_router.post("")
 async def get_travel_itinerary(travel_input: TravelInput):
     travel_input.trace_id = str(uuid.uuid4())
     logging.info(f"[Travel Itinerary Controller] Generating travel itinerary. Trace: {travel_input.trace_id}")

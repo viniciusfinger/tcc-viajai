@@ -14,6 +14,6 @@ export class TravelItineraryService {
   constructor(private readonly http: HttpClient) { }
 
   getTravelPlan(travelInput: TravelInput): Observable<TravelPlan> {
-    return this.http.post<TravelPlan>(`${this.apiUrl}/create-itinerary`, travelInput);
+    return this.http.post<TravelPlan>(`${this.apiUrl}/travel-itineraries`, travelInput);
   }
 }
