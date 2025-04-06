@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TravelInput } from '../commons/travel-input';
-import { TravelPlan } from '../commons/travel-plan';
+import { TravelItinerary } from '../commons/travel-itinerary';
 
 
 @Injectable({
@@ -13,7 +13,7 @@ export class TravelItineraryService {
 
   constructor(private readonly http: HttpClient) { }
 
-  getTravelPlan(travelInput: TravelInput): Observable<TravelPlan> {
-    return this.http.post<TravelPlan>(`${this.apiUrl}/travel-itineraries`, travelInput);
+  getTravelPlan(travelInput: TravelInput): Observable<TravelItinerary> {
+    return this.http.post<TravelItinerary>(`${this.apiUrl}/travel-itineraries`, travelInput);
   }
 }

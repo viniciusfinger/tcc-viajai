@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TravelItineraryService } from '../../services/travel-itinerary.service';
 import { TravelInput } from '../../commons/travel-input';
-import { TravelPlan } from '../../commons/travel-plan';
+import { TravelItinerary } from '../../commons/travel-itinerary';
 import { Router } from '@angular/router';
 import { InterestService } from '../../services/interest.service';
 
@@ -60,11 +60,10 @@ export class CreateItineraryComponent {
     };
 
     this.travelItineraryService.getTravelPlan(travelInput).subscribe({
-      next: (travelPlan: TravelPlan) => {
+      next: (travelItinerary: TravelItinerary) => {
         this.isLoading = false;
-        console.log('Travel plan received:', travelPlan);
-        // TODO: Navigate to a results page or display the results
-        // this.router.navigate(['/results'], { state: { travelPlan } });
+        console.log('Travel itinerary received:', travelItinerary);
+        this.router.navigate(['/travel-itinerary'], { state: { travelItinerary } });
       },
       error: (error) => {
         this.isLoading = false;
