@@ -5,6 +5,7 @@ from langchain_core.output_parsers import PydanticOutputParser
 from typing import List
 from pydantic import BaseModel, Field
 import logging
+from langchain.prompts import PromptTemplate
 
 
 def touristic_attractions_agent(state: State) -> dict[str, list[TouristicAttraction]]:
@@ -12,29 +13,33 @@ def touristic_attractions_agent(state: State) -> dict[str, list[TouristicAttract
     
     logging.info(f"[Touristic Attractions Agent] Fetching touristic attractions for {state.get('destination')}. Trace: {state.get('trace_id')}")
     
-    llm = ChatOpenAI(model="gpt-4o")
+    llm = ChatOpenAI(model="gpt-4o", temperature=0.0)
     
     parser = PydanticOutputParser(pydantic_object=TouristicAttractionListWrapper)
     
-    prompt = f"""
-    Você é um especialista em turismo e está ajudando um cliente a planejar sua viagem.
+    prompt_template = PromptTemplate.from_template("""
+        You are a travel planner. Your task is to list the main touristic attractions in {destination}.
+        
+        List at least 10 different touristic attractions. If you can't find any, list as many as you can.
+        
+        The user is interested in {interests}, so bring touristic attractions 
+        that are related to the user's interests and also general interest attractions.
+        
+        Respond in the following format, ignoring additional texts or explanations:
+        {format_instructions}
+    """)
     
-    Liste os principais pontos turísticos em {state.get('destination')}.
-    
-    Traga ao menos 10 pontos turísticos diferentes. Caso não encontre, traga o máximo que conseguir.
-    
-    O usuário tem interesse em {state.get('interests')}, portanto, traga pontos turísticos 
-    que estejam relacionados aos interesses do usuário e também pontos turísticos que possam ser 
-    de interesse geral.
-    
-    Responda no seguinte formato, ignorando textos ou explicações adicionais:
-    {parser.get_format_instructions()}
-    """
+    prompt = prompt_template.format(
+        destination=state.get('destination'), 
+        interests=state.get('interests'), 
+        format_instructions=parser.get_format_instructions()
+    )
     
     response = llm.invoke(prompt)
+    
     attractions_list_wrapper = parser.parse(response.content)
     
-    return {"touristic_attractions": attractions_list_wrapper.attractions}
+    return { "touristic_attractions": attractions_list_wrapper.attractions }
 
 
 class TouristicAttractionListWrapper(BaseModel):
