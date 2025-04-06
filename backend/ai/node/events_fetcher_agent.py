@@ -1,4 +1,3 @@
-from langchain import hub
 from langchain_openai import ChatOpenAI
 from backend.ai.model.state import State
 from backend.ai.model.event import Event
@@ -8,20 +7,42 @@ from typing import List
 from pydantic import BaseModel, Field
 from langchain_core.output_parsers import PydanticOutputParser
 import logging
+from langchain.prompts import PromptTemplate
 
-
-#TODO: Error ```Invalid Format: Missing 'Action:' after 'Thought:'
 
 def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
     """Fetch in DuckDuckGo for events occurring in the period and location of travel."""
     
     logging.info(f"[Events Fetcher Agent] Fetching events for {state.get('destination')} between {state.get('start_date')} and {state.get('end_date')}. Trace: {state.get('trace_id')}")
     
-    llm = ChatOpenAI(model="gpt-4o", temperature=0.2)
+    llm = ChatOpenAI(model="gpt-4o", temperature=0.0)
     
     tools = load_tools(["ddg-search"], llm=llm)
     
-    prompt = hub.pull("hwchase17/react")
+    prompt = PromptTemplate.from_template("""
+        You are an event finder agent. Your task is to find events that match the user's interests and are happening in the destination city during the travel period.
+        
+        You have access to the following tools:
+        
+        {tools}
+        
+        Use the following format:
+
+        Question: the input question you must answer
+        Thought: you should always think about what to do
+        Action: the action to take, should be one of [{tool_names}]
+        Action Input: the input to the action
+        Observation: the result of the action
+        ... (this Thought/Action/Action Input/Observation can repeat N times)
+        Thought: I now know the final answer
+        Final Answer: the final answer to the original input question
+
+        Begin!
+
+        Question: {input}
+        Thought: {agent_scratchpad}
+    """)
+    
     agent = create_react_agent(llm, tools, prompt)
     
     parser = PydanticOutputParser(pydantic_object=EventListWrapper)
@@ -33,22 +54,25 @@ def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
         handle_parsing_errors=True,
         max_iterations=10)
     
-    response = agent_executor.invoke({
-        "input": f"""
-        Você é um especialista em eventos e está ajudando um cliente a encontrar eventos durante sua viagem.
+    prompt_template = PromptTemplate.from_template("""
+        Find events in {destination} between {start_date} and {end_date} 
+        that match these interests: {interests}.
+        Also include some general interest events.
+        Find at least 5 events. 
         
-        Use a ferramenta de busca para encontrar eventos que acontecerão em {state.get('destination')} 
-        entre {state.get('start_date')} e {state.get('end_date')}.
-        
-        Busque por eventos que envolvam pelo menos um desses interesses: {state.get('interests')}, 
-        e eventos que possam ser de interesse geral.
-        
-        Busque no mínimo 5 eventos.
-        
-        Responda no seguinte formato, ignorando textos ou explicações adicionais:
-        {parser.get_format_instructions()}
-        """
-    })
+        Format the response exactly as specified in the parser instructions:
+        {format_instructions}
+    """)
+    
+    prompt = prompt_template.format(
+        destination=state.get('destination'), 
+        start_date=state.get('start_date'),  
+        end_date=state.get('end_date'),     
+        interests=state.get('interests'),
+        format_instructions=parser.get_format_instructions()
+    )
+    
+    response = agent_executor.invoke({ "input": prompt })
     
     events_list_wrapper = parser.parse(response["output"])
     
