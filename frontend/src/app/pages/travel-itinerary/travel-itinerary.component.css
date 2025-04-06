@@ -1,0 +1,130 @@
+:host {
+    display: block;
+    min-height: 100vh;
+}
+
+/* Timeline animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.relative {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Hover effects */
+.bg-white\/10 {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.bg-white\/10:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Loading animation */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.loading {
+    text-align: center;
+    padding: 2rem;
+}
+
+.itinerary {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+.header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.header h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.dates {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.days {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.day {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.day h3 {
+    color: #333;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.activities {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.activity {
+    background-color: white;
+    border-radius: 6px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.activity h4 {
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.activity p {
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.address,
+.time {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.error {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
