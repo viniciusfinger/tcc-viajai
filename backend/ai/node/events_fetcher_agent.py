@@ -19,21 +19,18 @@ def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
     
     tools = load_tools(["ddg-search"], llm=llm)
     
-    prompt = PromptTemplate.from_template("""
-        You are an event finder agent. Your task is to find events that match the user's interests and are happening in the destination city during the travel period.
-        
-        You have access to the following tools:
-        
+    prompt = PromptTemplate.from_template("""                                      
+        Exec. You have access to the following tools:
         {tools}
         
-        Use the following format:
+        You must always use the following format, never change it:
 
         Question: the input question you must answer
         Thought: you should always think about what to do
         Action: the action to take, should be one of [{tool_names}]
         Action Input: the input to the action
         Observation: the result of the action
-        ... (this Thought/Action/Action Input/Observation can repeat N times)
+        ... (this Thought/Action/Action Input/Observation can repeat )
         Thought: I now know the final answer
         Final Answer: the final answer to the original input question
 
