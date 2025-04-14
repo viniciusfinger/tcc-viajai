@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TravelItineraryService } from '../../services/travel-itinerary.service';
 import { TravelInput } from '../../commons/travel-input';
-import { TravelItinerary } from '../../commons/travel-itinerary';
 import { Router } from '@angular/router';
 import { InterestService } from '../../services/interest.service';
 
@@ -23,7 +21,6 @@ export class CreateItineraryComponent {
   isLoading: boolean = false;
 
   constructor(
-    private readonly travelItineraryService: TravelItineraryService,
     private readonly interestService: InterestService,
     private readonly router: Router
   ) { }
@@ -59,17 +56,7 @@ export class CreateItineraryComponent {
       interests: this.selectedInterests
     };
 
-    this.travelItineraryService.getTravelPlan(travelInput).subscribe({
-      next: (travelItinerary: TravelItinerary) => {
-        this.isLoading = false;
-        console.log('Travel itinerary received:', travelItinerary);
-        this.router.navigate(['/travel-itinerary'], { state: { travelItinerary } });
-      },
-      error: (error) => {
-        this.isLoading = false;
-        console.error('Error getting travel plan:', error);
-        alert('Ocorreu um erro ao criar o roteiro. Por favor, tente novamente.');
-      }
-    });
+    this.isLoading = false;
+    this.router.navigate(['/travel-itinerary'], { state: { travelInput } });
   }
 }
