@@ -1,0 +1,58 @@
+<div class="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-indigo-900 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Loading State -->
+        <div *ngIf="isLoading" class="flex justify-center items-center min-h-[400px]">
+            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+        </div>
+
+        <!-- Error State -->
+        <div *ngIf="error" class="bg-red-500/10 backdrop-blur-lg rounded-2xl p-6 border border-red-500/20">
+            <p class="text-red-400 text-center">{{ error }}</p>
+        </div>
+
+        <!-- Itinerary Content -->
+        <div *ngIf="travelItinerary && !isLoading" class="space-y-8">
+            <!-- Header -->
+            <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
+                <h1 class="text-3xl font-bold text-white mb-4">{{ travelItinerary.destination }}</h1>
+                <div class="flex items-center gap-4 text-white/80">
+                    <span class="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        {{ travelItinerary.start_date }} - {{ travelItinerary.end_date }}
+                    </span>
+                    <span class="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path
+                                d="M9.243 3.03a1 1 0 01.727 1.213L9.53 6h2.94l.56-2.243a1 1 0 111.94.486L14.53 6H17a1 1 0 110 2h-2.97l-1 4H15a1 1 0 110 2h-2.47l-.56 2.242a1 1 0 11-1.94-.485L10.47 14H7.53l-.56 2.242a1 1 0 11-1.94-.485L5.47 14H3a1 1 0 110-2h2.97l1-4H5a1 1 0 110-2h2.47l.56-2.243a1 1 0 011.213-.727zM9.53 8l-1 4h2.938l1-4H9.53z" />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Daily Itineraries -->
+            <div class="space-y-6">
+                <div *ngFor="let day of travelItinerary.travel_days"
+                    class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
+                    <h2 class="text-2xl font-semibold text-white mb-6">Day {{ day.date }}</h2>
+
+                    <!-- Activities -->
+                    <div class="space-y-6">
+                        <div *ngFor="let activity of day.activities" class="flex gap-6">
+                            <div class="flex-shrink-0 w-24 text-white/60 text-sm">
+                                {{ activity.time }}
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="text-lg font-medium text-white mb-2">{{ activity.name }}</h3>
+                                <p class="text-white/80">{{ activity.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

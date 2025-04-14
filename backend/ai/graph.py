@@ -16,9 +16,6 @@ def create_graph() -> CompiledStateGraph:
     graph.add_edge(START, "events_fetcher_agent")
     graph.add_edge(START, "touristic_attractions_agent")
     
-    # graph.add_edge("events_fetcher_agent", END)
-    # graph.add_edge("touristic_attractions_agent", END)
-    
     graph.add_edge("events_fetcher_agent", "travel_itinerary_maker_agent")
     graph.add_edge("touristic_attractions_agent", "travel_itinerary_maker_agent")
     graph.add_edge("travel_itinerary_maker_agent", END)
