@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TravelItineraryService } from '../../services/travel-itinerary.service';
 import { TravelInput } from '../../commons/travel-input';
 import { TravelItinerary } from '../../commons/travel-itinerary';
+import { mockTravelItinerary } from '../../services/mock-travel-itinerary';
 
 @Component({
   selector: 'app-travel-itinerary',
@@ -15,6 +16,7 @@ export class TravelItineraryComponent implements OnInit {
   travelItinerary: TravelItinerary | null = null;
   isLoading: boolean = false;
   error: string | null = null;
+  isMock = true;
 
   constructor(
     private readonly travelItineraryService: TravelItineraryService
@@ -24,6 +26,11 @@ export class TravelItineraryComponent implements OnInit {
     const state = history.state as { travelInput: TravelInput };
 
     console.log('State: ', state);
+
+    if (this.isMock) {
+      this.travelItinerary = mockTravelItinerary;
+      return;
+    }
 
     if (!state?.travelInput) {
       this.error = 'Dados de viagem não encontrados';
