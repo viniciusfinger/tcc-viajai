@@ -16,7 +16,9 @@ export class TravelItineraryComponent implements OnInit {
   travelItinerary: TravelItinerary | null = null;
   isLoading: boolean = false;
   error: string | null = null;
-  isMock = true;
+  isMock = false;
+
+ //TODO: remove mock
 
   constructor(
     private readonly travelItineraryService: TravelItineraryService
