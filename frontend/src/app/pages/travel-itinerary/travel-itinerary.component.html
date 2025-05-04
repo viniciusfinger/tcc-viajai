@@ -5,11 +5,16 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
                 </svg>
-                Criar novo itinerário
+                Create new itinerary
             </button>
         </div>
-        <div *ngIf="isLoading" class="flex justify-center items-center min-h-[400px]">
-            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+        <div *ngIf="isLoading" class="flex flex-col justify-center items-center min-h-[400px] space-y-6">
+            <p class="text-white text-xl font-medium animate-pulse">{{ loadingMessages[currentMessageIndex] }}</p>
+            <div class="w-80 bg-white/20 rounded-full h-5 overflow-hidden border border-white/30">
+                <div class="bg-indigo-500 h-5 rounded-full transition-all duration-300 flex items-center justify-end pr-2" [style.width.%]="loadingProgress">
+                    <span class="text-white text-xs font-bold">{{ loadingProgress | number:'1.0-0' }}%</span>
+                </div>
+            </div>
         </div>
 
         <div *ngIf="error" class="bg-red-500/10 backdrop-blur-lg rounded-2xl p-6 border border-red-500/20">
