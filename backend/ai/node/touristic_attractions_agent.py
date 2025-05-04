@@ -24,7 +24,7 @@ def touristic_attractions_agent(state: State) -> dict[str, list[TouristicAttract
     prompt_template = PromptTemplate.from_template("""
         You are a travel planner. Your task is to list the main touristic attractions in {destination}.
         
-        List at least 10 different touristic attractions. If you can't find any, list as many as you can.
+        List at least 10 different touristic attractions. If you can't find, list as many as you can.
         
         The user is interested in {interests}, so bring touristic attractions 
         that are related to the user's interests and also general interest attractions.
@@ -48,5 +48,4 @@ def touristic_attractions_agent(state: State) -> dict[str, list[TouristicAttract
 
 class TouristicAttractionListWrapper(BaseModel):
     """A wrapper class necesseary to handle pydantic list schema."""
-    
     attractions: List[TouristicAttraction] = Field(description="A list of touristic attractions")

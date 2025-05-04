@@ -34,6 +34,8 @@ def travel_itinerary_maker_agent(state: State) -> dict[str, TravelItinerary]:
     
     Os pontos turísticos são:
     {state.get('touristic_attractions')}
+
+    Se os pontos turísticos não tem horários, defina um horário coerente para eles.
     
     Responda no seguinte formato, ignorando textos ou explicações adicionais:
     {parser.get_format_instructions()}
