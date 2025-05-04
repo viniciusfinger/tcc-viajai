@@ -2,8 +2,8 @@ from fastapi import FastAPI
 from backend.controller.travel_itinerary_controller import travel_itinerary_router
 from backend.config.logger_config import setup_logger
 from backend.controller.interests_controller import interests_router
-
 from fastapi.middleware.cors import CORSMiddleware
+
 
 setup_logger()
 app = FastAPI()
