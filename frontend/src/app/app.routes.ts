@@ -3,11 +3,11 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: 'create',
+        redirectTo: 'create-itinerary',
         pathMatch: 'full'
     },
     {
-        path: 'create',
+        path: 'create-itinerary',
         loadComponent: () => import('./pages/create-itinerary/create-itinerary.component')
             .then(m => m.CreateItineraryComponent)
     },
