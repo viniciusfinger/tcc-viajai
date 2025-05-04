@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { TravelItineraryService } from '../../services/travel-itinerary.service';
 import { TravelInput } from '../../commons/travel-input';
 import { TravelItinerary } from '../../commons/travel-itinerary';
-
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-travel-itinerary',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './travel-itinerary.component.html',
   styleUrl: './travel-itinerary.component.css'
 })

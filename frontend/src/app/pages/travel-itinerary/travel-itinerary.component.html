@@ -1,5 +1,13 @@
-<div class="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-indigo-900 py-12 px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen bg-gradient-to-br from-indigo-900 to-black py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto">
+        <div class="mb-6">
+            <button routerLink="/create-itinerary" class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg flex items-center gap-2 border border-white/20 transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                </svg>
+                Criar novo itinerário
+            </button>
+        </div>
         <div *ngIf="isLoading" class="flex justify-center items-center min-h-[400px]">
             <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
         </div>
@@ -9,7 +17,7 @@
         </div>
 
         <div *ngIf="travelItinerary && !isLoading" class="space-y-8">
-            <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
+            <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 shadow-2xl">
                 <h1 class="text-3xl font-bold text-white mb-4">🗺️ Travel itinerary for {{ travelItinerary.travel_days.length }} days in {{ travelItinerary.destination }}</h1>
                 <div class="flex items-center gap-4 text-white/80">
                     <span class="flex items-center gap-3">
@@ -25,7 +33,7 @@
 
             <div class="space-y-6">
                 <div *ngFor="let day of travelItinerary.travel_days"
-                    class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
+                    class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 shadow-2xl">
                     <h2 class="text-2xl font-semibold text-white mb-6">Day {{ travelItinerary.travel_days.indexOf(day) + 1 }} - {{ day.date | date:'dd/MM/yyyy' }}</h2>
                     <div class="space-y-6">
                         <div *ngFor="let activity of day.activities" class="flex">
