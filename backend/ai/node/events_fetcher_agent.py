@@ -8,14 +8,19 @@ from pydantic import BaseModel, Field
 from langchain_core.output_parsers import PydanticOutputParser
 import logging
 from langchain.prompts import PromptTemplate
+from dotenv import load_dotenv
+import os
 
 
 def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
     """Fetch in DuckDuckGo for events occurring in the period and location of travel."""
-    
+
+    load_dotenv()
+    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
     logging.info(f"[Events Fetcher Agent] Fetching events for {state.get('destination')} between {state.get('start_date')} and {state.get('end_date')}. Trace: {state.get('trace_id')}")
     
-    llm = ChatOpenAI(model="gpt-4o", temperature=0.0)
+    llm = ChatOpenAI(model="gpt-4o", temperature=0.0, api_key=OPENAI_API_KEY)
     
     tools = load_tools(["ddg-search"], llm=llm)
     

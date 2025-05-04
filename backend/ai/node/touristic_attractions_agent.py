@@ -6,14 +6,18 @@ from typing import List
 from pydantic import BaseModel, Field
 import logging
 from langchain.prompts import PromptTemplate
+from dotenv import load_dotenv
+import os
 
 
 def touristic_attractions_agent(state: State) -> dict[str, list[TouristicAttraction]]:
     """Fetch in LLM for touristic attractions in the location of travel."""
-    
+    load_dotenv()
+    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
     logging.info(f"[Touristic Attractions Agent] Fetching touristic attractions for {state.get('destination')}. Trace: {state.get('trace_id')}")
     
-    llm = ChatOpenAI(model="gpt-4o", temperature=0.0)
+    llm = ChatOpenAI(model="gpt-4o", temperature=0.0, api_key=OPENAI_API_KEY)
     
     parser = PydanticOutputParser(pydantic_object=TouristicAttractionListWrapper)
     
