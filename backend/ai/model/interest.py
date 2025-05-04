@@ -3,7 +3,7 @@ from enum import Enum
 class Interest(Enum):
     MUSIC = "music"
     MOVIES = "movies"
-    HISTORICAL_PLACES = "historical_places"
+    HISTORICAL_PLACES = "historical places"
     SPORTS = "sports"
     FOOD = "food"
     BEAUTY = "beauty"
