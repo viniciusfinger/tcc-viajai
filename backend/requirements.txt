@@ -7,3 +7,4 @@ langgraph
 typing
 typing-extensions
 duckduckgo-search
+coloredlogs
