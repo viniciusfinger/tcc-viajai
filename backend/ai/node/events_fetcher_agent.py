@@ -59,12 +59,9 @@ def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
     prompt_template = PromptTemplate.from_template("""
         Find events in {destination} between {start_date} and {end_date} 
         that match these interests: {interests}.
-        Find at least 5 events.
-            
-        Also include some general interest events for tourists. 
-
-        Bring a detailed description of the event, including a briefing of the place and the date and time of the event, if possible.
-
+        Also include some general interest events.
+        Find at least 5 events. 
+        
         Format the response exactly as specified in the parser instructions:
         {format_instructions}
     """)
@@ -86,5 +83,4 @@ def events_fetcher_agent(state: State) -> dict[str, list[Event]]:
 
 class EventListWrapper(BaseModel):
     """A wrapper class necesseary to handle pydantic list schema."""
-    
     events: List[Event] = Field(description="A list of events")
